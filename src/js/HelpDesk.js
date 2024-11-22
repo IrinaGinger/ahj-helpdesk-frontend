@@ -1,4 +1,3 @@
-import TicketService from "./TicketService";
 import { renderElem, showForm, hideForm, showTicketData } from './utils';
 import TicketView from './TicketView';
 import TicketForm from './TicketForm';
@@ -7,14 +6,14 @@ import TicketForm from './TicketForm';
  *  Основной класс приложения
  * */
 export default class HelpDesk {
-  constructor(container) {
+  constructor(container, ticketService) {
     if (!(container instanceof HTMLElement)) {
       throw new Error("This is not HTML element!");
     }
 
     this.container = container;
 
-    this.ticketService = new TicketService('http://localhost:7070');
+    this.ticketService = ticketService;
 
     this.addTicket = this.addTicket.bind(this);
     this.editTicket = this.editTicket.bind(this);
@@ -110,7 +109,7 @@ export default class HelpDesk {
 
   addTicket(e) {
     e.preventDefault();
-    let addData = {};
+    const addData = {};
 
     Array.from(e.target.elements)
     .filter((item) => !!item.name)
